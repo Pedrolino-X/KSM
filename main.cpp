@@ -1,23 +1,74 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <sstream>
 #include <vector>
 #include "KnowledgeUtils.h"
 #include "LevenshteinFuzzyMatcher.h"
+#include "TextFileIO.h"
+
+//// 分割字符串为单词
+//std::vector<std::string> splitString(const std::string& input) {
+//    std::vector<std::string> result;
+//    std::istringstream iss(input);
+//    std::string word;
+//    while (iss >> word) {
+//        result.push_back(word);
+//    }
+//    return result;
+//}
 int main() {
     std::unordered_map<std::string, std::vector<std::string>> contentMap;
 
     // 示例：用户添加关键词和内容
-    std::vector<std::string> keywords = { "APK", "ABCDEFGHIJKLMNOPQ" };
-    std::string content = "测试内容不含R";
+    std::cout << "请输入关键词（多个关键词用空格分隔）：";
+    std::string keywordInput;
+    std::getline(std::cin, keywordInput);
+
+    std::vector<std::string> keywords;
+    std::istringstream iss(keywordInput);
+    std::string keyword;
+    while (iss >> keyword) {
+        keywords.push_back(keyword);
+    }
+
+    std::cout << "请输入内容：";
+    std::string content;
+    std::getline(std::cin, content);
     addContentAndKeyword(contentMap, keywords, content);
+
+     //示例：用户添加关键词和内容
+    std::vector<std::string> keywordst = { "APK", "ABCDEFGHIJKLMNOPQ" };
+    std::string contentt = "测试内容不含R";
+    addContentAndKeyword(contentMap, keywordst, contentt);
 
     std::vector<std::string> keysec = { "EXE", "ABCDEFGHIJKLMNOPQR" };
     std::string contentsec = "测试内容含R";
     addContentAndKeyword(contentMap, keysec, contentsec);
 
+    std::string filename = "data.txt";
+    saveDataToTextFile(contentMap, filename);
+
+    contentMap = loadDataFromTextFile(filename);
+
+    saveDataToTextFile(contentMap, filename);
+    // 给定内容查找关键词
+    std::string targetContent = "WEWE IOP";
+    std::vector<std::string> foundKeywords = findKeywordsByContent(contentMap, targetContent);
+
+    std::cout << "与给定内容相关的关键词：" << std::endl;
+    if (!foundKeywords.empty()) {
+        for (const std::string& keyword : foundKeywords) {
+            std::cout << keyword << std::endl;
+        }
+    }
+    else {
+        std::cout << "未找到与给定内容相关的关键词。" << std::endl;
+    }
+
+
     // 检索内容贴
-    std::string targetKeyword = "ABCDEFGHIJKLMNOP";
+    std::string targetKeyword = "ABCDEFGHIJKsslMNOP";
     std::vector<std::pair<double, std::string>> similarityList = searchKeywordByLevenshteinDistance(contentMap, targetKeyword);
 
     std::cout << "按相似度从高到低的关键词列表：" << std::endl;

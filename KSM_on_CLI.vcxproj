@@ -127,11 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="TextFileIO.cpp" />
     <ClCompile Include="KnowledgeUtils.cpp" />
     <ClCompile Include="LevenshteinFuzzyMatcher.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TextFileIO.h" />
     <ClInclude Include="KnowledgeUtils.h" />
     <ClInclude Include="LevenshteinFuzzyMatcher.h" />
   </ItemGroup>

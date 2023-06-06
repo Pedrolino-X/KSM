@@ -10,3 +10,4 @@ void addContentAndKeyword(std::unordered_map<std::string, std::vector<std::strin
 void modifyContent(std::unordered_map<std::string, std::vector<std::string>>& contentMap, const std::string& keyword, const std::string& newContent);
 void modifyKeyword(std::unordered_map<std::string, std::vector<std::string>>& contentMap, const std::string& oldKeyword, const std::string& newKeyword);
 void deleteContent(std::unordered_map<std::string, std::vector<std::string>>& contentMap, const std::string& keyword);
+std::vector<std::string> findKeywordsByContent(const std::unordered_map<std::string, std::vector<std::string>>& contentMap, const std::string& targetContent);

@@ -32,12 +32,12 @@ std::vector<std::pair<double, std::string>> searchKeywordByLevenshteinDistance(c
         const std::vector<std::string>& keywords = entry.second;
 
         for (const std::string& keyword : keywords) {
-            if (keyword == targetKeyword) {
-                double similarity = 1.0 - static_cast<double>(calculateLevenshteinDistance(keyword, targetKeyword)) / std::max(keyword.length(), targetKeyword.length());
-                if (similarity >= 0.6 && similarity <= 1.0) {
-                    similarityList.emplace_back(similarity, keyword);
-                }
-                break;  // 停止继续检索其他关键词
+            if (isKeywordInMixedContent(contentMap, keyword)){
+                continue;
+            }
+            double similarity = 1.0 - static_cast<double>(calculateLevenshteinDistance(keyword, targetKeyword)) / std::max(keyword.length(), targetKeyword.length());
+            if (similarity >= 0.0 && similarity <= 1.0) {
+                similarityList.emplace_back(similarity, keyword);
             }
         }
     }
@@ -45,4 +45,23 @@ std::vector<std::pair<double, std::string>> searchKeywordByLevenshteinDistance(c
     std::sort(similarityList.rbegin(), similarityList.rend());
 
     return similarityList;
+}
+
+bool isKeywordInMixedContent(const std::unordered_map<std::string, std::vector<std::string>>& contentMap, const std::string& targetContent)
+{
+    // 给定内容查找关键词
+    std::vector<std::string> foundKeywords = findKeywordsByContent(contentMap, targetContent);
+
+    if (!foundKeywords.empty()) {
+        // 将结果放入一个字符串中，方便比较
+        std::string concatenatedString = std::accumulate(foundKeywords.begin(), foundKeywords.end(), std::string());
+        if (concatenatedString == targetContent) {
+            return false; // 只能检索到自己，是关键词
+        }
+    }
+    else {
+        return true; // 不存在的内容，跳过规避风险
+    }
+
+    return true; // 能检索到对应的关键词，是内容
 }

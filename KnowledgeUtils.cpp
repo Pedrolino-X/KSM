@@ -49,7 +49,6 @@ void modifyContent(std::unordered_map<std::string, std::vector<std::string>>& co
     }
 }
 
-
 void modifyKeyword(std::unordered_map<std::string, std::vector<std::string>>& contentMap, const std::string& oldKeyword, const std::string& newKeyword) {
     if (contentMap.count(oldKeyword) > 0) {
         std::vector<std::string> entry = contentMap[oldKeyword];
@@ -71,4 +70,24 @@ void deleteContent(std::unordered_map<std::string, std::vector<std::string>>& co
     else {
         std::cout << "未找到与关键词匹配的内容贴。" << std::endl;
     }
+}
+
+// 查找与给定内容相关的关键词
+std::vector<std::string> findKeywordsByContent(const std::unordered_map<std::string, std::vector<std::string>>& contentMap, const std::string& targetContent) {
+    std::vector<std::string> keywords;
+
+    for (const auto& entry : contentMap) {
+        const std::vector<std::string>& keywordList = entry.second;
+
+        for (const std::string& keyword : keywordList) {
+            if (contentMap.count(keyword) > 0) {
+                const std::vector<std::string>& contentList = contentMap.at(keyword);
+                if (std::find(contentList.begin(), contentList.end(), targetContent) != contentList.end()) {
+                    keywords.push_back(keyword);
+                }
+            }
+        }
+    }
+
+    return keywords;
 }

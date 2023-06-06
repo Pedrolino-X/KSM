@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="库">
+      <UniqueIdentifier>{f154064d-8b24-49f5-b8c4-7b126ebdf1b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,12 +27,18 @@
     <ClCompile Include="LevenshteinFuzzyMatcher.cpp">
       <Filter>资源文件</Filter>
     </ClCompile>
+    <ClCompile Include="TextFileIO.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KnowledgeUtils.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="LevenshteinFuzzyMatcher.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFileIO.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
